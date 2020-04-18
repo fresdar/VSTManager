@@ -8,6 +8,6 @@ It's a winform .net 4 C# project to display information on VST plugins installed
 
 ## Dependencies
 
-[CefSharp.Winform](cefsharp/cefsharp) : webview with Chromium
+[CefSharp.Winform](https://github.com/cefsharp/cefsharp) : webview with Chromium
 
-[VST.NET.x64](obiwanjacobi/vst.net) : Virtual Studio Technology (VST) for .NET. Plugins and Host support.
+[VST.NET.x64](https://github.com/obiwanjacobi/vst.net) : Virtual Studio Technology (VST) for .NET. Plugins and Host support.
