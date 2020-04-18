@@ -1,5 +1,4 @@
 ﻿using CefSharp;
-using Microsoft.Win32;
 using System;
 using System.IO;
 
