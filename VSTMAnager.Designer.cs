@@ -44,8 +44,8 @@
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.treeviewImageList = new System.Windows.Forms.ImageList(this.components);
             this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
-            this.pluginWebSplitContainer = new System.Windows.Forms.SplitContainer();
             this.pluginSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.pluginWebSplitContainer = new System.Windows.Forms.SplitContainer();
             this.vstInfoListBox = new System.Windows.Forms.ListBox();
             this.pluginPropertyGrid = new System.Windows.Forms.PropertyGrid();
             this.menuStrip1.SuspendLayout();
@@ -53,13 +53,13 @@
             this.mainSplitContainer.Panel1.SuspendLayout();
             this.mainSplitContainer.Panel2.SuspendLayout();
             this.mainSplitContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pluginWebSplitContainer)).BeginInit();
-            this.pluginWebSplitContainer.Panel2.SuspendLayout();
-            this.pluginWebSplitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pluginSplitContainer)).BeginInit();
             this.pluginSplitContainer.Panel1.SuspendLayout();
             this.pluginSplitContainer.Panel2.SuspendLayout();
             this.pluginSplitContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pluginWebSplitContainer)).BeginInit();
+            this.pluginWebSplitContainer.Panel2.SuspendLayout();
+            this.pluginWebSplitContainer.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -193,19 +193,6 @@
             this.mainSplitContainer.SplitterDistance = 154;
             this.mainSplitContainer.TabIndex = 2;
             // 
-            // pluginWebSplitContainer
-            // 
-            this.pluginWebSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pluginWebSplitContainer.Location = new System.Drawing.Point(0, 0);
-            this.pluginWebSplitContainer.Name = "pluginWebSplitContainer";
-            // 
-            // pluginWebSplitContainer.Panel2
-            // 
-            this.pluginWebSplitContainer.Panel2.Controls.Add(this.pluginSplitContainer);
-            this.pluginWebSplitContainer.Size = new System.Drawing.Size(642, 426);
-            this.pluginWebSplitContainer.SplitterDistance = 462;
-            this.pluginWebSplitContainer.TabIndex = 1;
-            // 
             // pluginSplitContainer
             // 
             this.pluginSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -223,6 +210,19 @@
             this.pluginSplitContainer.Size = new System.Drawing.Size(176, 426);
             this.pluginSplitContainer.SplitterDistance = 328;
             this.pluginSplitContainer.TabIndex = 7;
+            // 
+            // pluginWebSplitContainer
+            // 
+            this.pluginWebSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pluginWebSplitContainer.Location = new System.Drawing.Point(0, 0);
+            this.pluginWebSplitContainer.Name = "pluginWebSplitContainer";
+            // 
+            // pluginWebSplitContainer.Panel2
+            // 
+            this.pluginWebSplitContainer.Panel2.Controls.Add(this.pluginSplitContainer);
+            this.pluginWebSplitContainer.Size = new System.Drawing.Size(642, 426);
+            this.pluginWebSplitContainer.SplitterDistance = 462;
+            this.pluginWebSplitContainer.TabIndex = 1;
             // 
             // vstInfoListBox
             // 
@@ -252,7 +252,6 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "VSTManager";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "VST Manager";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
@@ -261,13 +260,13 @@
             this.mainSplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).EndInit();
             this.mainSplitContainer.ResumeLayout(false);
-            this.pluginWebSplitContainer.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pluginWebSplitContainer)).EndInit();
-            this.pluginWebSplitContainer.ResumeLayout(false);
             this.pluginSplitContainer.Panel1.ResumeLayout(false);
             this.pluginSplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pluginSplitContainer)).EndInit();
             this.pluginSplitContainer.ResumeLayout(false);
+            this.pluginWebSplitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pluginWebSplitContainer)).EndInit();
+            this.pluginWebSplitContainer.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

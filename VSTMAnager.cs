@@ -156,10 +156,6 @@ namespace VSTManager
 
             if (!fi.Attributes.HasFlag(FileAttributes.Directory))
             {
-                string error = string.Empty;
-                VST3Plugin test = new VST3Plugin();
-                bool b = test.Load(path, ref error);
-
                 //vst plugin info
                 _properties = new PluginProperties();
                 _properties.FullPath = path;
