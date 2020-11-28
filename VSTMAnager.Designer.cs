@@ -45,7 +45,17 @@
             this.treeviewImageList = new System.Windows.Forms.ImageList(this.components);
             this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
             this.pluginWebSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.buttonForward = new System.Windows.Forms.Button();
+            this.buttonBack = new System.Windows.Forms.Button();
+            this.panelWebContent = new System.Windows.Forms.Panel();
             this.pluginSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.checkBoxModelSearchOp = new System.Windows.Forms.CheckBox();
+            this.buttonSearch = new System.Windows.Forms.Button();
+            this.groupBoxModel = new System.Windows.Forms.GroupBox();
+            this.textBoxModelSearch = new System.Windows.Forms.TextBox();
+            this.groupBrand = new System.Windows.Forms.GroupBox();
+            this.textBoxBrandSearch = new System.Windows.Forms.TextBox();
             this.vstInfoListBox = new System.Windows.Forms.ListBox();
             this.pluginPropertyGrid = new System.Windows.Forms.PropertyGrid();
             this.menuStrip1.SuspendLayout();
@@ -54,12 +64,19 @@
             this.mainSplitContainer.Panel2.SuspendLayout();
             this.mainSplitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pluginWebSplitContainer)).BeginInit();
+            this.pluginWebSplitContainer.Panel1.SuspendLayout();
             this.pluginWebSplitContainer.Panel2.SuspendLayout();
             this.pluginWebSplitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pluginSplitContainer)).BeginInit();
             this.pluginSplitContainer.Panel1.SuspendLayout();
             this.pluginSplitContainer.Panel2.SuspendLayout();
             this.pluginSplitContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            this.groupBoxModel.SuspendLayout();
+            this.groupBrand.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -199,12 +216,63 @@
             this.pluginWebSplitContainer.Location = new System.Drawing.Point(0, 0);
             this.pluginWebSplitContainer.Name = "pluginWebSplitContainer";
             // 
+            // pluginWebSplitContainer.Panel1
+            // 
+            this.pluginWebSplitContainer.Panel1.BackColor = System.Drawing.SystemColors.Window;
+            this.pluginWebSplitContainer.Panel1.Controls.Add(this.buttonForward);
+            this.pluginWebSplitContainer.Panel1.Controls.Add(this.buttonBack);
+            this.pluginWebSplitContainer.Panel1.Controls.Add(this.panelWebContent);
+            // 
             // pluginWebSplitContainer.Panel2
             // 
             this.pluginWebSplitContainer.Panel2.Controls.Add(this.pluginSplitContainer);
             this.pluginWebSplitContainer.Size = new System.Drawing.Size(642, 426);
             this.pluginWebSplitContainer.SplitterDistance = 462;
             this.pluginWebSplitContainer.TabIndex = 1;
+            // 
+            // buttonForward
+            // 
+            this.buttonForward.AccessibleDescription = "ChromiumWebBrowser";
+            this.buttonForward.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.buttonForward.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonForward.FlatAppearance.BorderSize = 0;
+            this.buttonForward.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonForward.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.buttonForward.Image = ((System.Drawing.Image)(resources.GetObject("buttonForward.Image")));
+            this.buttonForward.Location = new System.Drawing.Point(27, 1);
+            this.buttonForward.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonForward.Name = "buttonForward";
+            this.buttonForward.Size = new System.Drawing.Size(25, 25);
+            this.buttonForward.TabIndex = 1;
+            this.buttonForward.UseVisualStyleBackColor = false;
+            this.buttonForward.Click += new System.EventHandler(this.buttonForward_Click);
+            // 
+            // buttonBack
+            // 
+            this.buttonBack.AccessibleDescription = "ChromiumWebBrowser";
+            this.buttonBack.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.buttonBack.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonBack.FlatAppearance.BorderSize = 0;
+            this.buttonBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonBack.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.buttonBack.Image = ((System.Drawing.Image)(resources.GetObject("buttonBack.Image")));
+            this.buttonBack.Location = new System.Drawing.Point(1, 1);
+            this.buttonBack.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonBack.Name = "buttonBack";
+            this.buttonBack.Size = new System.Drawing.Size(25, 25);
+            this.buttonBack.TabIndex = 0;
+            this.buttonBack.UseVisualStyleBackColor = false;
+            this.buttonBack.Click += new System.EventHandler(this.buttonBack_Click);
+            // 
+            // panelWebContent
+            // 
+            this.panelWebContent.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelWebContent.Location = new System.Drawing.Point(0, 28);
+            this.panelWebContent.Name = "panelWebContent";
+            this.panelWebContent.Size = new System.Drawing.Size(459, 398);
+            this.panelWebContent.TabIndex = 2;
             // 
             // pluginSplitContainer
             // 
@@ -215,7 +283,7 @@
             // 
             // pluginSplitContainer.Panel1
             // 
-            this.pluginSplitContainer.Panel1.Controls.Add(this.vstInfoListBox);
+            this.pluginSplitContainer.Panel1.Controls.Add(this.splitContainer1);
             // 
             // pluginSplitContainer.Panel2
             // 
@@ -224,13 +292,104 @@
             this.pluginSplitContainer.SplitterDistance = 328;
             this.pluginSplitContainer.TabIndex = 7;
             // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.IsSplitterFixed = true;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.checkBoxModelSearchOp);
+            this.splitContainer1.Panel1.Controls.Add(this.buttonSearch);
+            this.splitContainer1.Panel1.Controls.Add(this.groupBoxModel);
+            this.splitContainer1.Panel1.Controls.Add(this.groupBrand);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.vstInfoListBox);
+            this.splitContainer1.Size = new System.Drawing.Size(176, 328);
+            this.splitContainer1.SplitterDistance = 161;
+            this.splitContainer1.TabIndex = 1;
+            // 
+            // checkBoxModelSearchOp
+            // 
+            this.checkBoxModelSearchOp.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBoxModelSearchOp.AutoSize = true;
+            this.checkBoxModelSearchOp.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.checkBoxModelSearchOp.Location = new System.Drawing.Point(9, 120);
+            this.checkBoxModelSearchOp.Name = "checkBoxModelSearchOp";
+            this.checkBoxModelSearchOp.Size = new System.Drawing.Size(101, 23);
+            this.checkBoxModelSearchOp.TabIndex = 3;
+            this.checkBoxModelSearchOp.Text = "Recherche stricte";
+            this.checkBoxModelSearchOp.UseVisualStyleBackColor = true;
+            // 
+            // buttonSearch
+            // 
+            this.buttonSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonSearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonSearch.Image")));
+            this.buttonSearch.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.buttonSearch.Location = new System.Drawing.Point(116, 111);
+            this.buttonSearch.Name = "buttonSearch";
+            this.buttonSearch.Size = new System.Drawing.Size(48, 41);
+            this.buttonSearch.TabIndex = 6;
+            this.buttonSearch.Text = "Prix";
+            this.buttonSearch.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.buttonSearch.UseVisualStyleBackColor = true;
+            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
+            // 
+            // groupBoxModel
+            // 
+            this.groupBoxModel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxModel.Controls.Add(this.textBoxModelSearch);
+            this.groupBoxModel.Location = new System.Drawing.Point(3, 57);
+            this.groupBoxModel.Name = "groupBoxModel";
+            this.groupBoxModel.Size = new System.Drawing.Size(170, 49);
+            this.groupBoxModel.TabIndex = 5;
+            this.groupBoxModel.TabStop = false;
+            this.groupBoxModel.Text = "Référence";
+            // 
+            // textBoxModelSearch
+            // 
+            this.textBoxModelSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxModelSearch.Location = new System.Drawing.Point(6, 19);
+            this.textBoxModelSearch.Name = "textBoxModelSearch";
+            this.textBoxModelSearch.Size = new System.Drawing.Size(155, 20);
+            this.textBoxModelSearch.TabIndex = 2;
+            // 
+            // groupBrand
+            // 
+            this.groupBrand.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBrand.Controls.Add(this.textBoxBrandSearch);
+            this.groupBrand.Location = new System.Drawing.Point(3, 3);
+            this.groupBrand.Name = "groupBrand";
+            this.groupBrand.Size = new System.Drawing.Size(170, 48);
+            this.groupBrand.TabIndex = 4;
+            this.groupBrand.TabStop = false;
+            this.groupBrand.Text = "Marque";
+            // 
+            // textBoxBrandSearch
+            // 
+            this.textBoxBrandSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxBrandSearch.Location = new System.Drawing.Point(6, 19);
+            this.textBoxBrandSearch.Name = "textBoxBrandSearch";
+            this.textBoxBrandSearch.Size = new System.Drawing.Size(155, 20);
+            this.textBoxBrandSearch.TabIndex = 1;
+            // 
             // vstInfoListBox
             // 
             this.vstInfoListBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.vstInfoListBox.FormattingEnabled = true;
             this.vstInfoListBox.Location = new System.Drawing.Point(0, 0);
             this.vstInfoListBox.Name = "vstInfoListBox";
-            this.vstInfoListBox.Size = new System.Drawing.Size(176, 328);
+            this.vstInfoListBox.Size = new System.Drawing.Size(176, 163);
             this.vstInfoListBox.TabIndex = 0;
             // 
             // pluginPropertyGrid
@@ -261,6 +420,7 @@
             this.mainSplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).EndInit();
             this.mainSplitContainer.ResumeLayout(false);
+            this.pluginWebSplitContainer.Panel1.ResumeLayout(false);
             this.pluginWebSplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pluginWebSplitContainer)).EndInit();
             this.pluginWebSplitContainer.ResumeLayout(false);
@@ -268,6 +428,15 @@
             this.pluginSplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pluginSplitContainer)).EndInit();
             this.pluginSplitContainer.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            this.groupBoxModel.ResumeLayout(false);
+            this.groupBoxModel.PerformLayout();
+            this.groupBrand.ResumeLayout(false);
+            this.groupBrand.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -293,6 +462,16 @@
         private System.Windows.Forms.ToolStripMenuItem checkDuplicatesToolStripMenuItem;
         private System.Windows.Forms.ImageList treeviewImageList;
         private System.Windows.Forms.SplitContainer pluginWebSplitContainer;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.GroupBox groupBrand;
+        private System.Windows.Forms.TextBox textBoxBrandSearch;
+        private System.Windows.Forms.GroupBox groupBoxModel;
+        private System.Windows.Forms.CheckBox checkBoxModelSearchOp;
+        private System.Windows.Forms.TextBox textBoxModelSearch;
+        private System.Windows.Forms.Button buttonSearch;
+        private System.Windows.Forms.Panel panelWebContent;
+        private System.Windows.Forms.Button buttonForward;
+        private System.Windows.Forms.Button buttonBack;
     }
 }
 
