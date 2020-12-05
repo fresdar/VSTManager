@@ -259,7 +259,7 @@ namespace VSTManager
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                MessageBox.Show(ex.ToString());
             }
             finally
             {

@@ -26,98 +26,104 @@ namespace VSTManager
         {
             string value = data.Replace("\"", "");
             int pos = value.IndexOf(':');
-            return value.Substring(pos+1);
+            return value.Substring(pos + 1);
         }
         private async Task<bool> Search(string url, string manufacturer, string model, bool strictSearch)
         {
-            CultureInfo culture = new CultureInfo("fr-FR", false);
-            var response = await m_refScraper.Analyze(new Uri(url));
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                var html = await response.Content.ReadAsStringAsync();
-                HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
-
-                doc.LoadHtml(html);
-                var root = doc.DocumentNode;
-                bool bFound = false;
-                // Search result page
-                var productNodes = root.CssSelect("div.slider-boxes > a");
-                foreach (var productNode in productNodes)
+            try {
+                CultureInfo culture = new CultureInfo("fr-FR", false);
+                var response = await m_refScraper.Analyze(new Uri(url));
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    bFound = true;
-                    string m = string.Empty;
-                    string price = string.Empty;
-                    string murl = string.Empty;
-                    string brand = string.Empty;
+                    var html = await response.Content.ReadAsStringAsync();
+                    HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
 
-                    murl = "https://www.woodbrass.com/" + productNode.GetAttributeValue("href");
-                    string info = productNode.GetAttributeValue("onclick");
-                    var data = info.Split(',');
-                    m = WebScraper.UppercaseFirst(getValue(data[2]));
-                    price = getValue(HttpUtility.HtmlDecode(data[4]));
-                    price = price.Replace("\\u20ac", " €");
-                    price = price.Replace(".00", "");
-                    brand = WebScraper.UppercaseFirst(getValue(HttpUtility.HtmlDecode(data[5])));
+                    doc.LoadHtml(html);
+                    var root = doc.DocumentNode;
+                    bool bFound = false;
+                    // Search result page
+                    var productNodes = root.CssSelect("div.slider-boxes > a");
+                    foreach (var productNode in productNodes)
+                    {
+                        bFound = true;
+                        string m = string.Empty;
+                        string price = string.Empty;
+                        string murl = string.Empty;
+                        string brand = string.Empty;
 
-                    bool canAdd = culture.CompareInfo.IndexOf(m, model, CompareOptions.IgnoreCase) >= 0;
-                    if (strictSearch)
-                    {
-                        canAdd &= culture.CompareInfo.IndexOf(brand, manufacturer, CompareOptions.IgnoreCase) >= 0;
-                    }
-                    if (canAdd)
-                    {
-                        m_refScraper.AddPrice(brand, m, "Woodbrass", murl, price);
-                    }
-                }
-                if (!bFound)
-                {
-                    productNodes = root.CssSelect("script");
-                    if (productNodes.Count() > 0)
-                    {
-                        // Product page
-                        string redirect = productNodes.Last().InnerHtml;
-                        var data = redirect.Split('\'');
-                        url = "https://www.woodbrass.com/" + data[1];
+                        murl = "https://www.woodbrass.com/" + productNode.GetAttributeValue("href");
+                        string info = productNode.GetAttributeValue("onclick");
+                        var data = info.Split(',');
+                        m = WebScraper.UppercaseFirst(getValue(data[2]));
+                        price = getValue(HttpUtility.HtmlDecode(data[4]));
+                        price = price.Replace("\\u20ac", " €");
+                        price = price.Replace(".00", "");
+                        brand = WebScraper.UppercaseFirst(getValue(HttpUtility.HtmlDecode(data[5])));
 
-                        response = await m_refScraper.Analyze(new Uri(url));
-                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                        bool canAdd = culture.CompareInfo.IndexOf(m, model, CompareOptions.IgnoreCase) >= 0;
+                        if (strictSearch)
                         {
-                            html = await response.Content.ReadAsStringAsync();
-                            doc = new HtmlAgilityPack.HtmlDocument();
+                            canAdd &= culture.CompareInfo.IndexOf(brand, manufacturer, CompareOptions.IgnoreCase) >= 0;
+                        }
+                        if (canAdd)
+                        {
+                            m_refScraper.AddPrice(brand, m, "Woodbrass", murl, price);
+                        }
+                    }
+                    if (!bFound)
+                    {
+                        productNodes = root.CssSelect("script");
+                        if (productNodes.Count() > 0)
+                        {
+                            // Product page
+                            string redirect = productNodes.Last().InnerHtml;
+                            var data = redirect.Split('\'');
+                            url = "https://www.woodbrass.com/" + data[1];
 
-                            doc.LoadHtml(html);
-                            root = doc.DocumentNode;
+                            response = await m_refScraper.Analyze(new Uri(url));
+                            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                            {
+                                html = await response.Content.ReadAsStringAsync();
+                                doc = new HtmlAgilityPack.HtmlDocument();
 
-                            string price = string.Empty;
-                            string m = string.Empty;
-                            string brand = string.Empty;
-                            var modelNodes = root.CssSelect("h1");
-                            if (modelNodes.Count() > 0)
-                            {
-                                m = WebScraper.UppercaseFirst(modelNodes.First().InnerHtml);
-                            }
-                            var priceNodes = root.CssSelect("div.clrBleu");
-                            if (priceNodes.Count() > 0)
-                            {
-                                price = priceNodes.First().InnerHtml;
-                                price = price.Replace(".00", "");
-                                price = price.Insert(price.Length - 1, " ");
-                            }
-                             
-                            var metaNodes = root.CssSelect("meta");
-                            foreach (var metaNode in metaNodes)
-                            {
-                                if (metaNode.GetAttributeValue("itemprop") == "brand")
+                                doc.LoadHtml(html);
+                                root = doc.DocumentNode;
+
+                                string price = string.Empty;
+                                string m = string.Empty;
+                                string brand = string.Empty;
+                                var modelNodes = root.CssSelect("h1");
+                                if (modelNodes.Count() > 0)
                                 {
-                                    brand = WebScraper.UppercaseFirst(metaNode.GetAttributeValue("content"));
-                                    break;
+                                    m = WebScraper.UppercaseFirst(modelNodes.First().InnerHtml);
                                 }
-                            }
+                                var priceNodes = root.CssSelect("div.clrBleu");
+                                if (priceNodes.Count() > 0)
+                                {
+                                    price = priceNodes.First().InnerHtml;
+                                    price = price.Replace(".00", "");
+                                    price = price.Insert(price.Length - 1, " ");
+                                }
 
-                            m_refScraper.AddPrice(brand, m, "Woodbrass", url, price);
+                                var metaNodes = root.CssSelect("meta");
+                                foreach (var metaNode in metaNodes)
+                                {
+                                    if (metaNode.GetAttributeValue("itemprop") == "brand")
+                                    {
+                                        brand = WebScraper.UppercaseFirst(metaNode.GetAttributeValue("content"));
+                                        break;
+                                    }
+                                }
+
+                                m_refScraper.AddPrice(brand, m, "Woodbrass", url, price);
+                            }
                         }
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
 
             return true;
