@@ -102,7 +102,6 @@
     <Compile Include="Shops\MusicMatos.cs" />
     <Compile Include="Shops\MusicStore.cs" />
     <Compile Include="Shops\Shop.cs" />
-    <Compile Include="Shops\SonoVente.cs" />
     <Compile Include="Shops\StarsMusic.cs" />
     <Compile Include="Shops\Thomann.cs" />
     <Compile Include="Shops\UniversSons.cs" />
