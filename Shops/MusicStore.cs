@@ -14,6 +14,7 @@ namespace VSTManager
         {
             m_refScraper = refScraper;
         }
+        private const string ShopName = "Music Store";
 
         private WebScraper m_refScraper;
         public async Task<bool> Search(string manufacturer, string model, bool strictSearch)
@@ -45,11 +46,7 @@ namespace VSTManager
                     {
                         murl = urlNode.GetAttributeValue("href");
                         m = urlNode.InnerText.Trim();
-                        brand = m.Split().FirstOrDefault();
-                        if (String.IsNullOrEmpty(brand))
-                        {
-                            brand = string.Empty;
-                        }
+                        WebScraper.ExtractBrandFromModel(manufacturer, ref m, ref brand);
                     }
                     foreach (HtmlNode priceNode in productNode.CssSelect("span.kor-product-sale-price-value"))
                     {
@@ -103,10 +100,14 @@ namespace VSTManager
                         }
                         if (canAdd)
                         {
-                            m_refScraper.AddPrice(brand, m, "Music Store", murl, price);
+                            m_refScraper.AddPrice(brand, m, ShopName, murl, price);
                         }
                     }
                 }
+            }
+            else
+            {
+                m_refScraper.ThrowException(ShopName, response.ReasonPhrase);
             }
 
             return true;

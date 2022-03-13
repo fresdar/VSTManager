@@ -12,6 +12,7 @@ namespace VSTManager
         {
             m_refScraper = refScraper;
         }
+        private const string ShopName = "Thomann";
 
         private WebScraper m_refScraper;
         public async Task<bool> Search(string manufacturer, string model, bool strictSearch)
@@ -33,27 +34,27 @@ namespace VSTManager
 
                 doc.LoadHtml(html);
                 var root = doc.DocumentNode;
-                var productNodes = root.CssSelect("div.extensible-article");
+                var productNodes = root.CssSelect("div.fx-product-list-entry");
                 foreach (var node in productNodes)
                 {
                     string m = string.Empty;
                     string price = string.Empty;
                     string murl = string.Empty;
                     string brand = string.Empty;
-                    foreach (HtmlNode brandNode in node.CssSelect("span.manufacturer"))
+                    foreach (HtmlNode brandNode in node.CssSelect("span.title__manufacturer"))
                     {
                         brand = WebScraper.UppercaseFirst(brandNode.InnerHtml);
                     }
-                    foreach (HtmlNode modelNode in node.CssSelect("span.model"))
+                    foreach (HtmlNode modelNode in node.CssSelect("span.title__name"))
                     {
                         m = modelNode.InnerHtml;
                     }
-                    foreach (HtmlNode priceNode in node.CssSelect("span.article-basketlink"))
+                    foreach (HtmlNode priceNode in node.CssSelect("span.fx-typography-price-primary"))
                     {
                         price = priceNode.InnerHtml;
-                        price = price.Replace(".", "");
+                        price = price.Trim().Replace(".", "");
                     }
-                    foreach (HtmlNode urlNode in node.CssSelect("a.article-link"))
+                    foreach (HtmlNode urlNode in node.CssSelect("a.product__content"))
                     {
                         murl = urlNode.GetAttributeValue("href");
                     }
@@ -65,9 +66,13 @@ namespace VSTManager
                     }
                     if (canAdd)
                     {
-                        m_refScraper.AddPrice(brand, m, "Thomann", murl, price);
+                        m_refScraper.AddPrice(brand, m, ShopName, murl, price);
                     }
                 }
+            }
+            else
+            {
+                m_refScraper.ThrowException(ShopName, response.ReasonPhrase);
             }
 
             return true;

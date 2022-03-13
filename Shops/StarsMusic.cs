@@ -13,6 +13,7 @@ namespace VSTManager
         {
             m_refScraper = refScraper;
         }
+        private const string ShopName = "Star's Music";
 
         private WebScraper m_refScraper;
         public async Task<bool> Search(string manufacturer, string model, bool strictSearch)
@@ -64,9 +65,13 @@ namespace VSTManager
                     }
                     if (canAdd)
                     {
-                        m_refScraper.AddPrice(brand, m, "Star's Music", murl, price);
+                        m_refScraper.AddPrice(brand, m, ShopName, murl, price);
                     }
                 }
+            }
+            else
+            {
+                m_refScraper.ThrowException(ShopName, response.ReasonPhrase);
             }
 
             return true;

@@ -106,98 +106,18 @@ namespace VSTManager
             dialog.ShowDialog();
         }
         private PluginProperties _properties;
-        private static void AddKeywords(string data, ref List<string> keywords)
-        {
-            string[] words = data.Split(' ');
-            foreach (string w in words)
-            {
-                if (!string.IsNullOrEmpty(w))
-                {
-                    if (!keywords.Exists(e => e == w))
-                        keywords.Add(w);
-                }
-            }
-        }
-        private string GetPluginQuery(string path)
-        {
-            string query = string.Empty;
-            List<string> keywords = new List<string>();
-
-            if (!string.IsNullOrEmpty(_properties.CompanyName))
-            {
-                AddKeywords(_properties.CompanyName, ref keywords);
-            }
-            else
-            {
-                string[] words = path.Split('\\');
-                if (words.Length > 1 && !words[words.Length - 2].Equals("VST3",StringComparison.InvariantCultureIgnoreCase))
-                {
-                    AddKeywords(words[words.Length - 2], ref keywords);
-                }
-            }
-            if (!string.IsNullOrEmpty(_properties.ProductName))
-            {
-                AddKeywords(_properties.ProductName, ref keywords);
-            }
-            else
-            {
-                string[] words = path.Split('\\');
-                if (words.Length > 1)
-                {
-                    AddKeywords(words[words.Length - 1].Replace(".dll","").Replace(".vst3",""), ref keywords);
-                }
-            }
-            AddKeywords("vst", ref keywords);
-            query = string.Join("+", keywords);
-
-            return query;
-        }
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
             string path = e.Node.FullPath;
-            FileInfo fi = new FileInfo(path);
 
-            this.vstInfoListBox.Items.Clear();
             this.pluginPropertyGrid.SelectedObject = null;
             string query = string.Empty;
+            _properties = new PluginProperties(path);
+            this.pluginPropertyGrid.SelectedObject = _properties;
 
-            if (!fi.Attributes.HasFlag(FileAttributes.Directory))
-            {
-                string error = string.Empty;
-                VST3Plugin test = new VST3Plugin();
-                bool b = test.Load(path, ref error);
-
-                //vst plugin info
-                _properties = new PluginProperties();
-                _properties.FullPath = path;
-                _properties.Size = fi.Length;
-                FileVersionInfo version = FileVersionInfo.GetVersionInfo(path);
-                _properties.ProductVersion = version.ProductVersion;
-                _properties.FileVersion = version.FileVersion;
-                _properties.CompanyName = version.CompanyName;
-                _properties.ProductName = version.ProductName;
-                _properties.FileDescription = version.FileDescription;
-                this.pluginPropertyGrid.SelectedObject = _properties;
-                query = GetPluginQuery(path);
-                VstPluginProperties vstProperties = new VstPluginProperties(path);
-                List<string> vstInfo = vstProperties.getPluginInfo();
-                if (vstInfo != null)
-                {
-                    this.vstInfoListBox.Items.AddRange(vstInfo.ToArray());
-                }
-                vstProperties.Dispose();
-            }
-            else
-            {
-                string[] words = path.Split('\\');
-                if (words.Length > 1)
-                {
-                    query = words[words.Length - 1].Replace(' ', '+') + "+vst";
-                }
-            }
             Preferences pref = new Preferences();
-            string address = pref.SearchEngineBaseUrl + "/?q=" + query;
+            string address = pref.SearchEngineBaseUrl + "/?q=" + _properties.Query;
             try
             {
                 this.panelWebContent.Controls.Clear();
@@ -242,9 +162,8 @@ namespace VSTManager
                 Registry.SetValue(keyName, "Brand", this.textBoxBrandSearch.Text, RegistryValueKind.String);
                 Registry.SetValue(keyName, "Model", this.textBoxModelSearch.Text, RegistryValueKind.String);
 
-                m_scraper.Search(this.textBoxBrandSearch.Text, this.textBoxModelSearch.Text, this.checkBoxModelSearchOp.Checked);
+                m_scraper.Search(this.textBoxBrandSearch.Text.Replace(' ','+'), this.textBoxModelSearch.Text.Replace(' ', '+'), this.checkBoxModelSearchOp.Checked);
 
-                Cursor.Current = Cursors.WaitCursor;
                 string result = await m_scraper.getResult();
                 this.panelWebContent.Controls.Clear();
                 if (browser != null)

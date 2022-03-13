@@ -36,6 +36,9 @@ namespace VSTManager
                 case "musicstore":
                     _shop = new ShopMusicStore(refScraper);
                     break;
+                case "sonovente":
+                    _shop = new ShopSonoVente(refScraper);
+                    break;
                 case "starsmusic":
                     _shop = new ShopStarsMusic(refScraper);
                     break;
@@ -47,6 +50,9 @@ namespace VSTManager
                     break;
                 case "woodbrass":
                     _shop = new ShopWoodbrass(refScraper);
+                    break;
+                case "centrechopin":
+                    _shop = new ShopCentreChopin(refScraper);
                     break;
                 default:
                     break;

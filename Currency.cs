@@ -14,6 +14,10 @@ namespace VSTManager
                 .Select(culture => {
                     try
                     {
+                        if(culture.Name == "")
+                        {
+                            return new RegionInfo("FR");
+                        }
                         return new RegionInfo(culture.Name);
                     }
                     catch

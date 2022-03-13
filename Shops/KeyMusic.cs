@@ -14,6 +14,7 @@ namespace VSTManager
         {
             m_refScraper = refScraper;
         }
+        private const string ShopName = "KeyMusic";
 
         private WebScraper m_refScraper;
         public async Task<bool> Search(string manufacturer, string model, bool strictSearch)
@@ -48,16 +49,13 @@ namespace VSTManager
                     foreach (HtmlNode nameNode in productNode.CssSelect("div.title"))
                     {
                         m = WebScraper.UppercaseFirst(nameNode.InnerText.Trim());
-                        brand = m.Split().FirstOrDefault();
-                        if (String.IsNullOrEmpty(brand))
-                        {
-                            brand = string.Empty;
-                        }
+                        WebScraper.ExtractBrandFromModel(manufacturer, ref m, ref brand);
                     }
                     foreach (HtmlNode priceNode in productNode.CssSelect("span.price-label"))
                     {
                         price = HttpUtility.HtmlDecode(priceNode.InnerHtml).Trim();
-                        price = price.Replace(",-", " €");
+                        price = price.Replace(",", ".");
+                        price += " €";
                     }
                     bool canAdd = culture.CompareInfo.IndexOf(m, model, CompareOptions.IgnoreCase) >= 0;
                     if (strictSearch)
@@ -66,9 +64,13 @@ namespace VSTManager
                     }
                     if (canAdd)
                     {
-                        m_refScraper.AddPrice(brand, m, "KeyMusic", murl, price);
+                        m_refScraper.AddPrice(brand, m, ShopName, murl, price);
                     }
                 }
+            }
+            else
+            {
+                m_refScraper.ThrowException(ShopName, response.ReasonPhrase);
             }
 
             return true;

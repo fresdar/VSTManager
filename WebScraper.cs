@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace VSTManager
 {
@@ -12,7 +14,8 @@ namespace VSTManager
         }
         private Task[] _searchTasks;
         private string[] _shops = {
-        "AudioSolutions",
+        //"AudioSolutions",
+        "CentreChopin",
         "BaxMusic",
         "KeyMusic",
         "Kitary",
@@ -24,11 +27,18 @@ namespace VSTManager
         "Woodbrass",
         "MusicStore",
         "EnergySon",
+        //"SonoVente", // not working
         };
+
+        public void ThrowException(string ShopName, string ErrorMessage)
+        {
+            MessageBox.Show(ShopName + " : " + ErrorMessage);
+        }
 
         private Dictionary<string, ManufacturerProducts> _manufacturers = new Dictionary<string, ManufacturerProducts>();
         public void AddPrice(string manufacturer, string model, string shop, string url, string price)
         {
+            Console.WriteLine(shop + " = " + model + " " + price);
             ManufacturerProducts products;
             if (!_manufacturers.TryGetValue(manufacturer, out products))
             {
@@ -75,8 +85,25 @@ namespace VSTManager
         {
             var httpClient = new HttpClient();
             var request = new HttpRequestMessage(HttpMethod.Get, url);
-            var response = await httpClient.SendAsync(request);
-
+            HttpResponseMessage response = new HttpResponseMessage(System.Net.HttpStatusCode.RequestTimeout);
+            try
+            {
+                response = await httpClient.SendAsync(request);
+            }
+            catch(Exception ex)
+            {
+                string message = ex.Message;
+                if(ex.InnerException != null)
+                {
+                    message += Environment.NewLine + ex.InnerException.Message;
+                    if (ex.InnerException.InnerException != null)
+                    {
+                        message += Environment.NewLine + ex.InnerException.InnerException.Message;
+                    }
+                }
+                Console.WriteLine(message);
+                throw new Exception(message);
+            }
             return response;
         }
         public static string UppercaseFirst(string s)
@@ -89,6 +116,17 @@ namespace VSTManager
             // Return char and concat substring.
             return char.ToUpper(s[0]) + s.Substring(1).ToLower();
         }
+        public static void ExtractBrandFromModel(string manufacturer, ref string model, ref string brand)
+        {
+            string t1 = model.ToLower();
+            String searchBrand = manufacturer.Replace('+', ' ');
+            string t2 = t1.Replace(searchBrand.ToLower(), "");
+            if (t2.Length < t1.Length)
+            {
+                model = model.Substring(t1.Length - t2.Length).Trim();
+                brand = WebScraper.UppercaseFirst(searchBrand.ToLower());
+            }
+        }
 
         public void Search(string manufacturer, string model, bool strictSearch)
         {
@@ -96,17 +134,14 @@ namespace VSTManager
             int index = 0;
             _searchTasks = new Task[_shops.Length];
 
-            foreach (string shop in _shops)
+            foreach (string name in _shops)
             {
-                Shop shopAudioSolutions = new Shop(shop, this);
-                _searchTasks[index++] = shopAudioSolutions.Search(manufacturer, model, strictSearch);
+                Shop shop = new Shop(name, this);
+                _searchTasks[index++] = shop.Search(manufacturer, model, strictSearch);
             }
         }
-
-        public async Task<string> getResult()
+        private string GeneratePage()
         {
-            await Task.WhenAll(_searchTasks);
-
             string result = @"<!DOCTYPE html><html lang=""fr""><head><meta charset='utf-8'>
 <meta name=""viewport"" content=""width=device-width,initial-scale=1,shrink-to-fit= no"">
 <link href=""https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"" rel=stylesheet>
@@ -117,7 +152,7 @@ namespace VSTManager
             {
                 string row = string.Empty;
                 string brand = manufacturer.Key;
-                foreach(var model in manufacturer.Value.Products)
+                foreach (var model in manufacturer.Value.Products)
                 {
                     string mod = model.Key;
                     foreach (var shop in model.Value.Prices)
@@ -126,7 +161,7 @@ namespace VSTManager
                         string price = shop.Value.Price;
                         string url = shop.Value.Url;
                         row = string.Format("<tr><td>{0}</td><td>{1}</td><td><a href='{4}'>{2}</a></td><td>{3}</td></tr>",
-                            brand,mod,sho,price,url);
+                            brand, mod, sho, price, url);
                         result += row;
                     }
                 }
@@ -146,6 +181,21 @@ $(document).ready(function() {
 </script>
 </body></html>";
             return result;
+        }
+
+        public async Task<string> getResult()
+        {
+            try
+            {
+                await Task.WhenAll(_searchTasks);
+                Console.WriteLine("Search done !");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return GeneratePage();
         }
     }
 }

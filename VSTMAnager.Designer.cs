@@ -49,15 +49,13 @@
             this.buttonBack = new System.Windows.Forms.Button();
             this.panelWebContent = new System.Windows.Forms.Panel();
             this.pluginSplitContainer = new System.Windows.Forms.SplitContainer();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.checkBoxModelSearchOp = new System.Windows.Forms.CheckBox();
+            this.pluginPropertyGrid = new System.Windows.Forms.PropertyGrid();
             this.buttonSearch = new System.Windows.Forms.Button();
+            this.checkBoxModelSearchOp = new System.Windows.Forms.CheckBox();
             this.groupBoxModel = new System.Windows.Forms.GroupBox();
             this.textBoxModelSearch = new System.Windows.Forms.TextBox();
             this.groupBrand = new System.Windows.Forms.GroupBox();
             this.textBoxBrandSearch = new System.Windows.Forms.TextBox();
-            this.vstInfoListBox = new System.Windows.Forms.ListBox();
-            this.pluginPropertyGrid = new System.Windows.Forms.PropertyGrid();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
             this.mainSplitContainer.Panel1.SuspendLayout();
@@ -71,10 +69,6 @@
             this.pluginSplitContainer.Panel1.SuspendLayout();
             this.pluginSplitContainer.Panel2.SuspendLayout();
             this.pluginSplitContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
             this.groupBoxModel.SuspendLayout();
             this.groupBrand.SuspendLayout();
             this.SuspendLayout();
@@ -276,55 +270,34 @@
             // 
             // pluginSplitContainer
             // 
-            this.pluginSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pluginSplitContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pluginSplitContainer.Location = new System.Drawing.Point(0, 0);
             this.pluginSplitContainer.Name = "pluginSplitContainer";
             this.pluginSplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // pluginSplitContainer.Panel1
             // 
-            this.pluginSplitContainer.Panel1.Controls.Add(this.splitContainer1);
+            this.pluginSplitContainer.Panel1.Controls.Add(this.pluginPropertyGrid);
             // 
             // pluginSplitContainer.Panel2
             // 
-            this.pluginSplitContainer.Panel2.Controls.Add(this.pluginPropertyGrid);
+            this.pluginSplitContainer.Panel2.Controls.Add(this.buttonSearch);
+            this.pluginSplitContainer.Panel2.Controls.Add(this.checkBoxModelSearchOp);
+            this.pluginSplitContainer.Panel2.Controls.Add(this.groupBoxModel);
+            this.pluginSplitContainer.Panel2.Controls.Add(this.groupBrand);
             this.pluginSplitContainer.Size = new System.Drawing.Size(176, 426);
-            this.pluginSplitContainer.SplitterDistance = 328;
+            this.pluginSplitContainer.SplitterDistance = 243;
             this.pluginSplitContainer.TabIndex = 7;
             // 
-            // splitContainer1
+            // pluginPropertyGrid
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.IsSplitterFixed = true;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.checkBoxModelSearchOp);
-            this.splitContainer1.Panel1.Controls.Add(this.buttonSearch);
-            this.splitContainer1.Panel1.Controls.Add(this.groupBoxModel);
-            this.splitContainer1.Panel1.Controls.Add(this.groupBrand);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.vstInfoListBox);
-            this.splitContainer1.Size = new System.Drawing.Size(176, 328);
-            this.splitContainer1.SplitterDistance = 161;
-            this.splitContainer1.TabIndex = 1;
-            // 
-            // checkBoxModelSearchOp
-            // 
-            this.checkBoxModelSearchOp.Appearance = System.Windows.Forms.Appearance.Button;
-            this.checkBoxModelSearchOp.AutoSize = true;
-            this.checkBoxModelSearchOp.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.checkBoxModelSearchOp.Location = new System.Drawing.Point(9, 120);
-            this.checkBoxModelSearchOp.Name = "checkBoxModelSearchOp";
-            this.checkBoxModelSearchOp.Size = new System.Drawing.Size(101, 23);
-            this.checkBoxModelSearchOp.TabIndex = 3;
-            this.checkBoxModelSearchOp.Text = "Recherche stricte";
-            this.checkBoxModelSearchOp.UseVisualStyleBackColor = true;
+            this.pluginPropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pluginPropertyGrid.Location = new System.Drawing.Point(0, 0);
+            this.pluginPropertyGrid.Name = "pluginPropertyGrid";
+            this.pluginPropertyGrid.Size = new System.Drawing.Size(176, 243);
+            this.pluginPropertyGrid.TabIndex = 9;
             // 
             // buttonSearch
             // 
@@ -332,24 +305,35 @@
             this.buttonSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonSearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonSearch.Image")));
             this.buttonSearch.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
-            this.buttonSearch.Location = new System.Drawing.Point(116, 111);
+            this.buttonSearch.Location = new System.Drawing.Point(116, 117);
             this.buttonSearch.Name = "buttonSearch";
             this.buttonSearch.Size = new System.Drawing.Size(48, 41);
-            this.buttonSearch.TabIndex = 6;
+            this.buttonSearch.TabIndex = 14;
             this.buttonSearch.Text = "Prix";
             this.buttonSearch.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.buttonSearch.UseVisualStyleBackColor = true;
-            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
+            // 
+            // checkBoxModelSearchOp
+            // 
+            this.checkBoxModelSearchOp.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBoxModelSearchOp.AutoSize = true;
+            this.checkBoxModelSearchOp.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.checkBoxModelSearchOp.Location = new System.Drawing.Point(9, 126);
+            this.checkBoxModelSearchOp.Name = "checkBoxModelSearchOp";
+            this.checkBoxModelSearchOp.Size = new System.Drawing.Size(101, 23);
+            this.checkBoxModelSearchOp.TabIndex = 11;
+            this.checkBoxModelSearchOp.Text = "Recherche stricte";
+            this.checkBoxModelSearchOp.UseVisualStyleBackColor = true;
             // 
             // groupBoxModel
             // 
             this.groupBoxModel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxModel.Controls.Add(this.textBoxModelSearch);
-            this.groupBoxModel.Location = new System.Drawing.Point(3, 57);
+            this.groupBoxModel.Location = new System.Drawing.Point(3, 63);
             this.groupBoxModel.Name = "groupBoxModel";
             this.groupBoxModel.Size = new System.Drawing.Size(170, 49);
-            this.groupBoxModel.TabIndex = 5;
+            this.groupBoxModel.TabIndex = 13;
             this.groupBoxModel.TabStop = false;
             this.groupBoxModel.Text = "Référence";
             // 
@@ -367,10 +351,10 @@
             this.groupBrand.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBrand.Controls.Add(this.textBoxBrandSearch);
-            this.groupBrand.Location = new System.Drawing.Point(3, 3);
+            this.groupBrand.Location = new System.Drawing.Point(3, 9);
             this.groupBrand.Name = "groupBrand";
             this.groupBrand.Size = new System.Drawing.Size(170, 48);
-            this.groupBrand.TabIndex = 4;
+            this.groupBrand.TabIndex = 12;
             this.groupBrand.TabStop = false;
             this.groupBrand.Text = "Marque";
             // 
@@ -382,23 +366,6 @@
             this.textBoxBrandSearch.Name = "textBoxBrandSearch";
             this.textBoxBrandSearch.Size = new System.Drawing.Size(155, 20);
             this.textBoxBrandSearch.TabIndex = 1;
-            // 
-            // vstInfoListBox
-            // 
-            this.vstInfoListBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.vstInfoListBox.FormattingEnabled = true;
-            this.vstInfoListBox.Location = new System.Drawing.Point(0, 0);
-            this.vstInfoListBox.Name = "vstInfoListBox";
-            this.vstInfoListBox.Size = new System.Drawing.Size(176, 163);
-            this.vstInfoListBox.TabIndex = 0;
-            // 
-            // pluginPropertyGrid
-            // 
-            this.pluginPropertyGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pluginPropertyGrid.Location = new System.Drawing.Point(0, 0);
-            this.pluginPropertyGrid.Name = "pluginPropertyGrid";
-            this.pluginPropertyGrid.Size = new System.Drawing.Size(176, 94);
-            this.pluginPropertyGrid.TabIndex = 6;
             // 
             // VSTManager
             // 
@@ -426,13 +393,9 @@
             this.pluginWebSplitContainer.ResumeLayout(false);
             this.pluginSplitContainer.Panel1.ResumeLayout(false);
             this.pluginSplitContainer.Panel2.ResumeLayout(false);
+            this.pluginSplitContainer.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pluginSplitContainer)).EndInit();
             this.pluginSplitContainer.ResumeLayout(false);
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel1.PerformLayout();
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
             this.groupBoxModel.ResumeLayout(false);
             this.groupBoxModel.PerformLayout();
             this.groupBrand.ResumeLayout(false);
@@ -453,25 +416,23 @@
         private System.Windows.Forms.ToolStripMenuItem scanToolStripMenuItem;
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.SplitContainer mainSplitContainer;
-        private System.Windows.Forms.PropertyGrid pluginPropertyGrid;
         private System.Windows.Forms.SplitContainer pluginSplitContainer;
-        private System.Windows.Forms.ListBox vstInfoListBox;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewVST2xToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewVST3ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem checkDuplicatesToolStripMenuItem;
         private System.Windows.Forms.ImageList treeviewImageList;
         private System.Windows.Forms.SplitContainer pluginWebSplitContainer;
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.GroupBox groupBrand;
-        private System.Windows.Forms.TextBox textBoxBrandSearch;
-        private System.Windows.Forms.GroupBox groupBoxModel;
-        private System.Windows.Forms.CheckBox checkBoxModelSearchOp;
-        private System.Windows.Forms.TextBox textBoxModelSearch;
-        private System.Windows.Forms.Button buttonSearch;
         private System.Windows.Forms.Panel panelWebContent;
         private System.Windows.Forms.Button buttonForward;
         private System.Windows.Forms.Button buttonBack;
+        private System.Windows.Forms.PropertyGrid pluginPropertyGrid;
+        private System.Windows.Forms.Button buttonSearch;
+        private System.Windows.Forms.CheckBox checkBoxModelSearchOp;
+        private System.Windows.Forms.GroupBox groupBoxModel;
+        private System.Windows.Forms.TextBox textBoxModelSearch;
+        private System.Windows.Forms.GroupBox groupBrand;
+        private System.Windows.Forms.TextBox textBoxBrandSearch;
     }
 }
 

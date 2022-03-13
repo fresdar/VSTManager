@@ -8,17 +8,17 @@ using System.Web;
 
 namespace VSTManager
 {
-    public class ShopAudioSolutions : IShop
+    public class ShopCentreChopin : IShop
     {
-        public ShopAudioSolutions(WebScraper refScraper)
+        public ShopCentreChopin(WebScraper refScraper)
         {
             m_refScraper = refScraper;
         }
-        private const string ShopName = "AudioSolutions";
+        private const string ShopName = "CentreChopin";
         private WebScraper m_refScraper;
         public async Task<bool> Search(string manufacturer, string model, bool strictSearch)
         {
-            string url = string.Format("https://www.audiosolutions.fr/recherche?controller=search&s={0}+{1}",
+            string url = string.Format("https://www.centre-chopin.com/module/ambjolisearch/jolisearch?search_query={0}+{1}",
                 manufacturer,
                 model);
             return await Search(url, manufacturer, model, strictSearch);
@@ -36,22 +36,27 @@ namespace VSTManager
 
                     doc.LoadHtml(html);
                     var root = doc.DocumentNode;
-                    var productNodes = root.CssSelect("article.js-product-miniature");
+                    var productNodes = root.CssSelect("li.ajax_block_product");
                     foreach (var node in productNodes)
                     {
                         string m = string.Empty;
                         string price = string.Empty;
                         string murl = string.Empty;
                         string brand = string.Empty;
-                        foreach (HtmlNode modelNode in node.CssSelect("h2.product-title a"))
+                        foreach (HtmlNode modelNode in node.CssSelect("a.product-name"))
                         {
-                            m = modelNode.InnerHtml;
-                            murl = modelNode.GetAttributeValue("href");
+                            m = modelNode.GetAttributeValue("title");
+                            WebScraper.ExtractBrandFromModel(manufacturer,ref m, ref brand);
                         }
-                        foreach (HtmlNode priceNode in node.CssSelect("span.price"))
+                        foreach (HtmlNode hrefNode in node.CssSelect("a.quick-view"))
+                        {
+                            murl = hrefNode.GetAttributeValue("href");
+                        }
+                        foreach (HtmlNode priceNode in node.CssSelect("span.product-price"))
                         {
                             price = priceNode.InnerHtml;
                             price = price.Trim().Replace("\u202F", "").Replace(",", ".");
+                            price = price.Replace(".00", "");
                         }
 
                         bool canAdd = culture.CompareInfo.IndexOf(m, model, CompareOptions.IgnoreCase) >= 0;

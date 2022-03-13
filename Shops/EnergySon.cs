@@ -15,6 +15,8 @@ namespace VSTManager
             m_refScraper = refScraper;
         }
 
+        private const string ShopName = "EnergySon";
+
         private WebScraper m_refScraper;
         public async Task<bool> Search(string manufacturer, string model, bool strictSearch)
         {
@@ -66,7 +68,7 @@ namespace VSTManager
                     }
                     if (canAdd)
                     {
-                        m_refScraper.AddPrice(brand, m, "EnergySon", murl, price);
+                        m_refScraper.AddPrice(brand, m, ShopName, murl, price);
                     }
                 }
                 if (productNodes.Count() == 0)
@@ -103,10 +105,14 @@ namespace VSTManager
                         }
                         if (canAdd)
                         {
-                            m_refScraper.AddPrice(brand, m, "EnergySon", murl, price);
+                            m_refScraper.AddPrice(brand, m, ShopName, murl, price);
                         }
                     }
                 }
+            }
+            else
+            {
+                m_refScraper.ThrowException(ShopName, response.ReasonPhrase);
             }
 
             return true;

@@ -14,7 +14,7 @@ namespace VSTManager
         {
             m_refScraper = refScraper;
         }
-
+        private const string ShopName = "Bax music";
         private WebScraper m_refScraper;
         public async Task<bool> Search(string manufacturer, string model, bool strictSearch)
         {
@@ -28,10 +28,10 @@ namespace VSTManager
         {
             CultureInfo culture = new CultureInfo("fr-FR", false);
 
-            var responseBax = await m_refScraper.Analyze(new Uri(url));
-            if (responseBax.StatusCode == System.Net.HttpStatusCode.OK)
+            var response = await m_refScraper.Analyze(new Uri(url));
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                var html = await responseBax.Content.ReadAsStringAsync();
+                var html = await response.Content.ReadAsStringAsync();
                 HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
                 doc.LoadHtml(html);
 
@@ -49,6 +49,8 @@ namespace VSTManager
                     string price = productInfo.price;
                     price = price.Replace(".00", "");
                     string currency = CurrencyTools.GetCurrencySymbol((string)productInfo.currencyCode);
+                    
+                    WebScraper.ExtractBrandFromModel(manufacturer, ref m, ref brand);
 
                     foreach (HtmlNode urlNode in node.CssSelect("div.product-thumb > a"))
                     {
@@ -61,9 +63,14 @@ namespace VSTManager
                         canAdd &= culture.CompareInfo.IndexOf(brand, manufacturer, CompareOptions.IgnoreCase) >= 0;
                     }
                     if (canAdd)
-                        m_refScraper.AddPrice(brand, m, "Bax music", murl, price + " " + currency);
+                        m_refScraper.AddPrice(brand, m, ShopName, murl, price + " " + currency);
                 }
             }
+            else
+            {
+                m_refScraper.ThrowException(ShopName, response.ReasonPhrase);
+            }
+
             return true;
         }
     }

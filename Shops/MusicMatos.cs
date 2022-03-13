@@ -14,11 +14,12 @@ namespace VSTManager
         {
             m_refScraper = refScraper;
         }
+        private const string ShopName = "Music Matos";
 
         private WebScraper m_refScraper;
         public async Task<bool> Search(string manufacturer, string model, bool strictSearch)
         {
-            string url = string.Format("https://www.musicmatos.com/recherche?controller=search&s={0}+{1}",
+            string url = string.Format("https://www.musicmatos.com/recherche?s={0}+{1}&resultsPerPage=10",
                 manufacturer,
                 model);
             return await Search(url, manufacturer, model, strictSearch);
@@ -79,9 +80,13 @@ namespace VSTManager
                     }
                     if (canAdd)
                     {
-                        m_refScraper.AddPrice(brand, m, "Music Matos", murl, price);
+                        m_refScraper.AddPrice(brand, m, ShopName, murl, price);
                     }
                 }
+            }
+            else
+            {
+                m_refScraper.ThrowException(ShopName, response.ReasonPhrase);
             }
 
             return true;

@@ -13,6 +13,7 @@ namespace VSTManager
         {
             m_refScraper = refScraper;
         }
+        private const string ShopName = "Woodbrass";
 
         private WebScraper m_refScraper;
         public async Task<bool> Search(string manufacturer, string model, bool strictSearch)
@@ -56,8 +57,8 @@ namespace VSTManager
                         var data = info.Split(',');
                         m = WebScraper.UppercaseFirst(getValue(data[2]));
                         price = getValue(HttpUtility.HtmlDecode(data[4]));
-                        price = price.Replace("\\u20ac", " €");
                         price = price.Replace(".00", "");
+                        price += " €";
                         brand = WebScraper.UppercaseFirst(getValue(HttpUtility.HtmlDecode(data[5])));
 
                         bool canAdd = culture.CompareInfo.IndexOf(m, model, CompareOptions.IgnoreCase) >= 0;
