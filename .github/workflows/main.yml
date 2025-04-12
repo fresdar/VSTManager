@@ -37,8 +37,7 @@ jobs:
       - name: Build Solution
         run: msbuild.exe VSTManager.sln /p:platform="Any CPU" /p:configuration="Release"
       
-      - name: Upload build
-        uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
-          name: dist output
+          name: release
           path: ./bin/Release
