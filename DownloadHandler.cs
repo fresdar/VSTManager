@@ -8,6 +8,11 @@ namespace VSTManager
     {
         public event EventHandler<DownloadItem> OnBeforeDownloadFired;
 
+        public bool CanDownload(IWebBrowser chromiumWebBrowser, IBrowser browser, string url, string requestMethod)
+        {
+            return true;
+        }
+
         public event EventHandler<DownloadItem> OnDownloadUpdatedFired;
 
         public void OnBeforeDownload(IWebBrowser chromiumWebBrowser, IBrowser browser, DownloadItem downloadItem, IBeforeDownloadCallback callback)
